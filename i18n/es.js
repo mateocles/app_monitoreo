@@ -2,7 +2,13 @@ const language = {
   es: 'Español',
   en: 'Ingles'
 }
-
+const input = {
+  username: 'Username',
+  pass: 'Contraseña'
+}
+const title = {
+  welcome: 'Bienvenido!'
+}
 const button = {
   login: 'Iniciar sesión',
   signup: 'Registrarse',
@@ -13,6 +19,8 @@ const button = {
 const error = {
   required: 'Todos los campos son requeridos',
   login: {
+    USERNAME: 'El nombre de usuario debe tener más de 4 caracteres.',
+    PASS: 'La contraseña debe tener más de 8 caracteres.',
     ERROR_LOGIN: 'Lo sentimos tenemos un problema, intentelo más tarde',
     USER_NOT_EXIST: 'El usuario no existe',
     IS_NOT_CLIENT: 'Este usuario no es un cliente',
@@ -44,5 +52,7 @@ export default {
   button,
   error,
   label,
-  language
+  language,
+  input,
+  title
 }

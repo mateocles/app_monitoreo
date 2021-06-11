@@ -16,6 +16,5 @@ export const Main = () => {
 
   if (authentication === undefined)
     return null
-
-  return <Public />
+  return authentication ? <Public /> : <Private />
 }

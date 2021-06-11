@@ -13,11 +13,14 @@ import * as Animatable from 'react-native-animatable';
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-
 import { useTheme } from 'react-native-paper';
 
 
-const SignInScreen = () => {
+import i18n from '../../../i18n/i18n'
+import { auth as AuthActions } from '../../../services/Auth/AuthActions'
+
+
+const Login = () => {
 
   const [data, setData] = React.useState({
     username: '',
@@ -121,9 +124,9 @@ const SignInScreen = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor='#009387' barStyle="light-content" />
+      <StatusBar backgroundColor='#4F8CFB' barStyle="light-content" />
       <View style={styles.header}>
-        <Text style={styles.text_header}>Bienvenido!</Text>
+        <Text style={styles.text_header}>{i18n.t('title.welcome')}</Text>
       </View>
       <Animatable.View
         animation="fadeInUpBig"
@@ -133,7 +136,7 @@ const SignInScreen = () => {
       >
         <Text style={[styles.text_footer, {
           color: colors.text
-        }]}>Username</Text>
+        }]}>{i18n.t('input.username')}</Text>
         <View style={styles.action}>
           <FontAwesome
             name="user-o"
@@ -141,7 +144,7 @@ const SignInScreen = () => {
             size={20}
           />
           <TextInput
-            placeholder="Username"
+            placeholder={i18n.t('input.username')}
             placeholderTextColor="#666666"
             style={[styles.textInput, {
               color: colors.text
@@ -164,7 +167,7 @@ const SignInScreen = () => {
         </View>
         {data.isValidUser ? null :
           <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Username debe ser mas de 4 caracteres.</Text>
+            <Text style={styles.errorMsg}>{i18n.t('error.login.USERNAME')}</Text>
           </Animatable.View>
         }
 
@@ -172,7 +175,7 @@ const SignInScreen = () => {
         <Text style={[styles.text_footer, {
           color: colors.text,
           marginTop: 35
-        }]}>Password</Text>
+        }]}>{i18n.t('input.pass')}</Text>
         <View style={styles.action}>
           <Feather
             name="lock"
@@ -180,7 +183,7 @@ const SignInScreen = () => {
             size={20}
           />
           <TextInput
-            placeholder="Password"
+            placeholder={i18n.t('input.pass')}
             placeholderTextColor="#666666"
             secureTextEntry={data.secureTextEntry ? true : false}
             style={[styles.textInput, {
@@ -209,7 +212,7 @@ const SignInScreen = () => {
         </View>
         {data.isValidPassword ? null :
           <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Password deber ser mas de 8 caracteres.</Text>
+            <Text style={styles.errorMsg}>{i18n.t('error.login.PASS')}</Text>
           </Animatable.View>
         }
         <View style={styles.button}>
@@ -217,12 +220,12 @@ const SignInScreen = () => {
             style={styles.signIn}
           >
             <LinearGradient
-              colors={['#08d4c4', '#01ab9d']}
+              colors={['#4F8CFB', '#4F8CFB']}
               style={styles.signIn}
             >
               <Text style={[styles.textSign, {
                 color: '#fff'
-              }]}>Sign In</Text>
+              }]}>{i18n.t('button.login')}</Text>
             </LinearGradient>
           </TouchableOpacity>
         </View>
@@ -231,12 +234,12 @@ const SignInScreen = () => {
   );
 };
 
-export default SignInScreen;
+export default Login;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#009387'
+    backgroundColor: '#4F8CFB'
   },
   header: {
     flex: 1,

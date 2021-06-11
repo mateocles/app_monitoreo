@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import { Container, Content, Item, Input, Button, Text, Spinner } from 'native-base';
+import { StyleSheet } from 'react-native';
+import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text } from 'native-base';
+import { useDispatch } from 'react-redux';
 
-//import i18n from '../../../i18n/i18n'
+import i18n from '../../../i18n/i18n'
+import { auth as AuthActions } from '../../../services/Auth/AuthActions'
 
-const Home = ({ match, form }) => {
+const Home = () => {
+
   const dispatch = useDispatch()
 
-  const { loading, error } = useSelector(state => state.auth)
-  const [isFormError, setFormError] = useState()
-
-  useEffect(() => {
-
-  })
+  const logout = () => {
+    dispatch(AuthActions.logout())
+  }
 
   return (
     <Container>
-      <Content>
-        <Text>Home</Text>
-
-      </Content>
+      <Header>
+        <Button onPress={logout}>
+          <Text>{i18n.t('button.logout')}</Text>
+        </Button>
+      </Header>
     </Container>
   )
 }

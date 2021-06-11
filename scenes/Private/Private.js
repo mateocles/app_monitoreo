@@ -1,44 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text } from 'native-base';
-import { useDispatch } from 'react-redux';
+import { Container } from 'native-base';
+import { NativeRouter, Route } from "react-router-native";
 
-import i18n from '../../i18n/i18n'
-import { auth as AuthActions } from '../../services/Auth/AuthActions'
+import home from './Home/Home'
 
-export default function Private(props) {
-
-  const dispatch = useDispatch()
-
-  const logout = () => {
-    dispatch(AuthActions.logout())
-  }
+export default function Private() {
 
   return (
-    <Container>
-      <Header>
-        <Button onPress={logout}>
-          <Text>{i18n.t('button.logout')}</Text>
-        </Button>
-      </Header>
-      <Content />
-      <Footer>
-        <FooterTab>
-          <Button>
-            <Icon name="apps" />
-          </Button>
-          <Button>
-            <Icon name="camera" />
-          </Button>
-          <Button active>
-            <Icon active name="navigate" />
-          </Button>
-          <Button>
-            <Icon name="person" />
-          </Button>
-        </FooterTab>
-      </Footer>
-    </Container>
+    <NativeRouter>
+      <Container>
+        <Route exact path="/" component={home} />
+      </Container>
+    </NativeRouter>
   );
 }
 

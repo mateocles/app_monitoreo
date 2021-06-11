@@ -3,11 +3,24 @@ const button = {
   signup: 'Sign Up'
 }
 
+const title = {
+  welcome: 'Welcome!'
+}
+const input = {
+  username: 'Username',
+  pass: 'PassWord'
+}
+
 const error = {
-  login: 'The fields are required'
+  login: {
+    USERNAME: 'Username must be more than 4 characters.',
+    PASS: 'Password must be more than 8 characters.'
+  }
 }
 
 export default {
   button,
-  error
+  error,
+  input,
+  title
 }

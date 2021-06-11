@@ -73,7 +73,6 @@ export class Api {
         return response;
       }
       response.payload = await response.json()
-      console.log(response);
       return response;
     }).catch(err => err)
   }
@@ -93,7 +92,6 @@ export class Api {
         return response;
       }
       response.payload = await response.json()
-      console.log(response);
       return response;
     }).catch(err => err)
   }
