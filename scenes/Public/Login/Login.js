@@ -9,6 +9,7 @@ import {
   StatusBar,
   Alert
 } from 'react-native';
+import { Spinner } from 'native-base';
 import * as Animatable from 'react-native-animatable';
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -89,37 +90,15 @@ const Login = () => {
     }
   }
 
-  const loginHandle = (userName, password) => {
-
-    const foundUser = Users.filter(item => {
-      return userName == item.username && password == item.password;
-    });
-
-    if (data.username.length == 0 || data.password.length == 0) {
-      Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
-        { text: 'Okay' }
-      ]);
-      return;
+  const logeo = (e) => {
+    Alert.alert('Wrong Input!', 'Username or password field cannot be empty.' + data.username + '  ' + data.password, [
+      { text: 'Okay' }
+    ]);
+    if (data.username !== '' || data.password !== '') {
+      if (!error) {
+        dispatch(AuthActions.login(data.username, data.password))
+      }
     }
-
-    if (foundUser.length == 0) {
-      Alert.alert('Invalid User!', 'Username or password is incorrect.', [
-        { text: 'Okay' }
-      ]);
-      return;
-    }
-    Alert.alert(
-      "Alert Title",
-      "My Alert Msg" + userName + password,
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
-    );
   }
 
   return (
@@ -215,8 +194,9 @@ const Login = () => {
             <Text style={styles.errorMsg}>{i18n.t('error.login.PASS')}</Text>
           </Animatable.View>
         }
-        <View style={styles.button}>
+        <View style={styles.button} >
           <TouchableOpacity
+            onPress={logeo}
             style={styles.signIn}
           >
             <LinearGradient
