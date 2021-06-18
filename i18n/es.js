@@ -26,6 +26,8 @@ const error = {
     IS_NOT_CLIENT: 'Este usuario no es un cliente',
     CLIENT_INACTIVE: 'Cliente inactivo',
     USER_INACTIVE: 'Usuario inactivo',
+    ERROR_LOGIN: 'Error al digitar el usuario y contraseña',
+    ERROR_MSG: 'Intenatalo nuevamente'
   },
   signup: {
     EMAIL_IN_USE: 'Este correo ya existe'

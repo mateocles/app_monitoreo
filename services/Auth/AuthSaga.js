@@ -1,13 +1,16 @@
 import { put, takeLatest, all } from 'redux-saga/effects';
+import jwt_decode from "jwt-decode";
+
 import Api from '../../common/api/Api'
 import * as TokenStorage from '../../common/storage/Token'
 import { auth } from "./AuthActions"
 
 function* login({ payload }) {
-  const { payload: response } = yield Api.post("/login", payload)
-  if (response.Token) {
-    TokenStorage.save(response.Token);
-    yield put(auth.loginResponse(response.Token));
+  const response = yield Api.post("/login", payload)
+  if (response.payload.Token) {
+    TokenStorage.save(response.payload.Token);
+    var decoded = jwt_decode(response.payload.Token);
+    yield put(auth.loginResponse(response.payload.Token));
   } else {
     const err = new TypeError(response?.error ? response.error : 'ERROR_LOGIN')
     yield put(auth.loginResponse(err, response))

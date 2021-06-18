@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions';
 import * as TokenStorage from '../../common/storage/Token';
 
 export const INITIAL_STATE = {
-  authentication: false,
+  authentication: undefined,
   loading: false,
   error: {
     login: undefined,
@@ -17,12 +17,13 @@ const reducer = handleActions({
     }),
     LOGIN_RESPONSE: {
       next(state, { payload: { token } }) {
-        return { ...state, token, authentication: true, loading: false }
+        return { ...state, token, authentication: true, loading: false, user:token }
       },
       throw(state, { payload: { message } }) {
         return { ...state, error: { ...state.error, login: message }, loading: false }
       }
     },
+
     LOGOUT: (state, { payload: { } }) => ({ ...state, authentication: false }),
     SET_LOGGED: (state, { payload: { auth } }) => ({ ...state, authentication: auth ? auth : false }),
   }

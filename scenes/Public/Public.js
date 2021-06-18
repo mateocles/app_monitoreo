@@ -15,7 +15,6 @@ const Public = ({ }) => {
     <NativeRouter>
       <Container>
         <Route exact path="/" component={Login} />
-        <Route path="/login" component={Login} />
       </Container>
     </NativeRouter>
   )

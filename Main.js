@@ -6,15 +6,11 @@ import Public from './scenes/Public/Public';
 import { auth as AuthActions } from './services/Auth/AuthActions'
 
 export const Main = () => {
+  
   const dispatch = useDispatch()
   const { authentication } = useSelector(state => state.auth)
-
-
-  useEffect(() => {
-    dispatch(AuthActions.isLogged())
-  }, [])
-
-  if (authentication === undefined)
-    return null
-  return authentication ? <Public /> : <Private />
+  
+  if (!authentication)
+    return <Public />
+  return authentication ? <Private /> : <Public />
 }

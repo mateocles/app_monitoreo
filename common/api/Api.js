@@ -4,33 +4,33 @@ import { store } from '../../store/Store'
 import { auth } from '../../services/Auth/AuthActions';
 
 export class Api {
-
+  
   post(url, data, formData) {
     let dataBody
-    
-    if(formData){
+
+    if (formData) {
       dataBody = new FormData();
       Object.keys(data).map(key => {
-        if(!Array.isArray(data[key])){
+        if (!Array.isArray(data[key])) {
           const isFile = data[key] && data[key].size
           const isJson = typeof data[key] === 'object'
-          
-          dataBody.append(key, isFile || !isJson ? data[key]: JSON.stringify(data[key]));
-        } else 
+
+          dataBody.append(key, isFile || !isJson ? data[key] : JSON.stringify(data[key]));
+        } else
           data[key].forEach(item => dataBody.append(key, item))
       })
     } else
       dataBody = JSON.stringify(data);
-    
+
     return fetch(`${API_URL}${url}`, {
       method: 'POST',
       headers: (formData ? {
         'Authorization': `Bearer ${Token.get()}`
       } : {
-          'Accept': 'application/json',
-          'Content-type': 'application/json',
-          'Authorization': `Bearer ${Token.get()}`
-        }),
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${Token.get()}`
+      }),
       body: dataBody
     }).then(async response => {
       if (response.status === 404) {
@@ -44,16 +44,15 @@ export class Api {
 
   isJson(str) {
     try {
-        JSON.parse(str);
+      JSON.parse(str);
     } catch (e) {
-        return false;
+      return false;
     }
     return true;
-}
+  }
 
   put(url, data, header) {
     let isFormData = data instanceof FormData;
-
     return fetch(`${API_URL}${url}`, {
       method: 'PUT',
       headers: (header ? header :
@@ -95,7 +94,6 @@ export class Api {
       return response;
     }).catch(err => err)
   }
-
 }
 
 export default new Api();
