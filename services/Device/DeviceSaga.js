@@ -1,21 +1,21 @@
 import { put, takeLatest, all } from 'redux-saga/effects';
 import Api from '../../common/api/Api'
 import * as TokenStorage from '../../common/storage/Token'
-import { device } from "./DeviceActions"
+import { devices } from "./DeviceActions"
 
-function* checkDevices({ payload }) {
-  const response = yield Api.post('', payload)
-  console.debug(response);
-  if (response.payload.Token) {
-    yield put(auth.loginResponse(response.payload.Token));
+function* getDevices({ payload }) {
+  const response = yield Api.get(`/device/${payload}`)
+  console.log(response)
+  if (response) {
+    yield put(devices.devicesResponse(response));
   } else {
-    const err = new TypeError(response?.error ? response.error : 'ERROR_LOGIN')
-    yield put(auth.loginResponse(err, response))
+    const err = new TypeError(response?.error ? response.error : 'NO DEVICES')
+    yield put(devices.devicesResponse(err, response))
   }
 }
 
 function* ActionWatcher() {
-  yield takeLatest(device.checkDevices, checkDevices)
+  yield takeLatest(devices.getDevices, getDevices)
 }
 
 export default function* rootSaga() {

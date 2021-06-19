@@ -2,7 +2,6 @@ import { handleActions } from 'redux-actions';
 import * as TokenStorage from '../../common/storage/Token';
 
 export const INITIAL_STATE = {
-  devices: [],
   loading: false,
   error: {
     devices: undefined,
@@ -10,8 +9,8 @@ export const INITIAL_STATE = {
 }
 
 const reducer = handleActions({
-  CHECKDEVICES: {
-    DEVICES: (state, { payload: { } }) => ({
+  DEVICES: {
+    GET_DEVICES: (state, { payload: { } }) => ({
       ...state, loading: true, error: { ...state.error, devices: false }
     }),
     DEVICES_RESPONSE: {

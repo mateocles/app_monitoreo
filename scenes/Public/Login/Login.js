@@ -8,6 +8,7 @@ import {
   StyleSheet,
   StatusBar, Alert
 } from 'react-native';
+import { Spinner } from 'native-base';
 import * as Animatable from 'react-native-animatable';
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -113,6 +114,7 @@ const Login = ({ form }) => {
           >
           </TouchableOpacity>
         </View>
+        {loading && <Spinner color='blue' />}
         <View style={styles.button} >
           <TouchableOpacity
             onPress={signIn}

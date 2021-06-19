@@ -1,5 +1,4 @@
 import { handleActions } from 'redux-actions';
-import * as TokenStorage from '../../common/storage/Token';
 
 export const INITIAL_STATE = {
   authentication: undefined,
@@ -17,7 +16,7 @@ const reducer = handleActions({
     }),
     LOGIN_RESPONSE: {
       next(state, { payload: { token } }) {
-        return { ...state, token, authentication: true, loading: false, user:token }
+        return { ...state, token, authentication: true, loading: false }
       },
       throw(state, { payload: { message } }) {
         return { ...state, error: { ...state.error, login: message }, loading: false }

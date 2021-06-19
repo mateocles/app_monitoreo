@@ -1,8 +1,8 @@
 import { createActions } from 'redux-actions';
 
-export const { device } = createActions({
-  DEVICE: {
-    CHECKDEVICES: (user, pass) => ({ user, pass }),
-    CHECKDEVICES_RESPONSE: (devices) => ({ devices }),
+export const { devices } = createActions({
+  DEVICES: {
+    GET_DEVICES: (id) => ({id}),
+    DEVICES_RESPONSE: (devices) => ({ devices }),
   }
 })

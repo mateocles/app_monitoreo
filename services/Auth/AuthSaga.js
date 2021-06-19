@@ -9,7 +9,6 @@ function* login({ payload }) {
   const response = yield Api.post("/login", payload)
   if (response.payload.Token) {
     TokenStorage.save(response.payload.Token);
-    var decoded = jwt_decode(response.payload.Token);
     yield put(auth.loginResponse(response.payload.Token));
   } else {
     const err = new TypeError(response?.error ? response.error : 'ERROR_LOGIN')
