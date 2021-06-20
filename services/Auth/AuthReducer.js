@@ -15,8 +15,8 @@ const reducer = handleActions({
       ...state, loading: true, error: { ...state.error, login: false }
     }),
     LOGIN_RESPONSE: {
-      next(state, { payload: { token } }) {
-        return { ...state, token, authentication: true, loading: false }
+      next(state, { payload: { data, token } }) {
+        return { ...state, user: data, token, authentication: true, loading: false }
       },
       throw(state, { payload: { message } }) {
         return { ...state, error: { ...state.error, login: message }, loading: false }

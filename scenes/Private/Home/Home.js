@@ -1,14 +1,24 @@
-import React, { useState, useRef, useLinking, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
-  TextInput,
   Platform,
   StyleSheet,
   StatusBar
 } from 'react-native';
-import { Container, Header, Content, List, ListItem, Thumbnail, Left, Body, Right, Button } from 'native-base';
+import {
+  Container,
+  Content,
+  List,
+  ListItem,
+  Thumbnail,
+  Left,
+  Body,
+  Right,
+  Button
+} from 'native-base';
+import { Spinner } from 'native-base';
 import * as Animatable from 'react-native-animatable';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from 'react-native-paper';
@@ -16,21 +26,19 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import i18n from '../../../i18n/i18n'
 import { auth as AuthActions } from '../../../services/Auth/AuthActions'
-import { user as UserActions } from '../../../services/User/UserActions'
 import { devices as DeviceActions } from '../../../services/Device/DeviceActions'
 
 const Home = () => {
 
   const { colors } = useTheme();
   const dispatch = useDispatch()
-  const { userData, loading } = useSelector(state => state.user)
+
+  const { user, token } = useSelector(state => state.auth)
+  const { devices, loading } = useSelector(state => state.devices)
 
   useEffect(() => {
-    dispatch(UserActions.getUser())
-    if (userData) {
-      dispatch(DeviceActions.getDevices(userData.data.idUsuario))
-    }
-  }, [dispatch, userData]);
+    dispatch(DeviceActions.getDevices(user.data.idUsuario, token))
+  }, [dispatch, user]);
 
   const logout = () => {
     dispatch(AuthActions.logout())
@@ -41,7 +49,7 @@ const Home = () => {
       <StatusBar backgroundColor='#4F8CFB' barStyle="light-content" />
       <View style={styles.header}>
         <Text style={styles.text_header}>{i18n.t('title.welcome')}</Text>
-        {userData && (<Text style={styles.text_header}>{userData.data.name} {userData.data.lastName} </Text>
+        {user && (<Text style={styles.text_header}>{user.data.name} {user.data.lastName} </Text>
         )}</View>
       <Animatable.View
         animation="fadeInUpBig"
@@ -50,29 +58,29 @@ const Home = () => {
         }]}
       >
 
-        <Container style={[styles.footer, {
-          backgroundColor: colors.background
-        }]}>
-          <Content>
-            <List>
-              <ListItem thumbnail>
-                <Left>
-                  <Thumbnail square source={{ uri: 'https://img.icons8.com/fluent-systems-regular/452/device-shop--v1.png' }} />
-                </Left>
-                <Body>
-                  <Text>Sankhadeep</Text>
-                  <Text note numberOfLines={1}>Its time to build a difference . .</Text>
-                </Body>
-                <Right>
-                  <Button transparent>
-                    <Text>View</Text>
-                  </Button>
-                </Right>
-              </ListItem>
-            </List>
-          </Content>
-        </Container>
-
+        {loading && <Spinner color='blue' />}
+        {devices?.map((item) => (
+          <TouchableOpacity>
+            <View style={styles.row}>
+              <Thumbnail square source={{ uri: 'https://img.icons8.com/fluent-systems-regular/452/device-shop--v1.png' }} style={styles.image} />
+              <View>
+                <View style={styles.nameContainer}>
+                  <Text
+                    style={styles.nameTxt}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {item.Dispositivo}
+                  </Text>
+                  <Text style={styles.mblTxt}>{item.Estado === 1? 'Activo': 'Inactivo'}</Text>
+                </View>
+                <View style={styles.emailContainer}>
+                  <Text style={styles.emailTxt}>Mac:{item.Mac}</Text>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))}
         <View style={styles.button} >
           <TouchableOpacity
             onPress={logout}
@@ -93,6 +101,46 @@ const Home = () => {
   )
 }
 const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderColor: "#DCDCDC",
+    backgroundColor: "#fff",
+    borderBottomWidth: 1,
+    padding: 10,
+  },
+  image: {
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+  },
+  nameContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: 280,
+  },
+  nameTxt: {
+    marginLeft: 15,
+    fontWeight: "600",
+    color: "#222",
+    fontSize: 18,
+    width: 170,
+  },
+  mblTxt: {
+    fontWeight: "200",
+    color: "#777",
+    fontSize: 13,
+  },
+  emailContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  emailTxt: {
+    fontWeight: "400",
+    color: "#008B8B",
+    fontSize: 12,
+    marginLeft: 15,
+  },
   container: {
     flex: 1,
     backgroundColor: '#4F8CFB'

@@ -3,14 +3,14 @@ import { createActions } from 'redux-actions';
 export const { auth } = createActions({
   AUTH: {
     LOGIN: (user, pass) => ({ user, pass }),
-    LOGIN_RESPONSE: (token) => ({ token }),
+    LOGIN_RESPONSE: (data, token) => ({ data, token }),
 
     SIGNUP: (data) => ({ data }),
-    SIGNUP_RESPONSE: () => ({ }),
+    SIGNUP_RESPONSE: () => ({}),
 
-    LOGOUT: () => ({ }),
+    LOGOUT: () => ({}),
 
-    IS_LOGGED: () => ({ }),
+    IS_LOGGED: () => ({}),
     SET_LOGGED: (auth) => ({ auth }),
   }
 })

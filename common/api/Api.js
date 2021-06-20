@@ -2,9 +2,10 @@ import { API_URL } from '../config/Environments';
 import * as Token from '../storage/Token';
 import { store } from '../../store/Store'
 import { auth } from '../../services/Auth/AuthActions';
+import { Left } from 'native-base';
 
 export class Api {
-  
+
   post(url, data, formData) {
     let dataBody
 
@@ -76,14 +77,14 @@ export class Api {
     }).catch(err => err)
   }
 
-  get(url, params) {
+  get(url, token, params) {
     url = new URL(`${API_URL}${url}`);
     if (params)
       Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
     return fetch(url, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${Token.get()}`
+        'Authorization': `Bearer ${token}`
       }
     }).then(async response => {
       if (response.status === 404) {
